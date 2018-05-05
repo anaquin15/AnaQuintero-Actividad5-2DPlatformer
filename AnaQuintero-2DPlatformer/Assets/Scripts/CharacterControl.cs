@@ -18,16 +18,16 @@ public class CharacterControl : MonoBehaviour {
 	public AudioClip muerte;
 	public AudioClip finals;
 	public AudioClip LoseLife;
+	public AudioClip Jump;
 
 	bool isGrounded =false;
 
-	Animator anim;
-	AudioSource audio;
+		AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
 		audio = GetComponent <AudioSource> ();
-		anim = GetComponent <Animator> ();
+
 	}
 
 	public void clickEnElBoton() {
@@ -50,6 +50,7 @@ public class CharacterControl : MonoBehaviour {
 		//salto
 		if (Input.GetKeyDown (KeyCode.Space) && isGrounded == true) {
 			this.gameObject.GetComponent <Rigidbody2D> ().AddForce (Vector2.up * 9, ForceMode2D.Impulse); // le agregamos una fuerza hacia arriba
+			audio.PlayOneShot (Jump, 9); 
 		}
 		
 	}
@@ -113,6 +114,8 @@ public class CharacterControl : MonoBehaviour {
 		}
 		if (coll.gameObject.tag == "final") {
 			audio.PlayOneShot (finals, 8);
+
+			GameObject.Destroy (coll.gameObject);
 		}
 	}
 
